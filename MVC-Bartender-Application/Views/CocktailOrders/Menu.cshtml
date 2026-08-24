@@ -1,1 +1,52 @@
-<h1>Menu</h1>
+@model IEnumerable<MVC_Bartender_Application.Models.Cocktail>
+
+@{
+    ViewData["Title"] = "Cocktail Menu";
+}
+
+<h1>Cocktail Menu</h1>
+
+<p>Select a cocktail to place an order.</p>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    @foreach (var cocktail in Model)
+    {
+        <tr>
+            <td>@cocktail.Name</td>
+            <td>@cocktail.Description</td>
+            <td>@cocktail.Price.ToString("C")</td>
+            <td>
+                <form asp-controller="CocktailOrders"
+                      asp-action="Create"
+                      method="post">
+
+                    <input type="hidden"
+                           name="cocktailId"
+                           value="@cocktail.Id" />
+
+                    <button type="submit"
+                            class="btn btn-primary">
+                        Order
+                    </button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<a asp-controller="Home"
+   asp-action="Index"
+   class="btn btn-secondary">
+    Back to Home
+</a>
