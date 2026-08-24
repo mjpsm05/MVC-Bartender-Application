@@ -1,0 +1,26 @@
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# .NET
+bin/
+obj/
+
+# SQLite databases
+*.db
+*.db-shm
+*.db-wal
+
+# macOS
+.DS_Store
+
+# User-specific files
+*.user
+*.suo
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.*
