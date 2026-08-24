@@ -1,1 +1,66 @@
-<h1>Queue</h1>
+@model IEnumerable<MVC_Bartender_Application.Models.CocktailOrder>
+
+@{
+    ViewData["Title"] = "Order Queue";
+}
+
+<h1>Bartender Order Queue</h1>
+
+@if (!Model.Any())
+{
+    <p>There are currently no cocktail orders.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Order #</th>
+            <th>Cocktail</th>
+            <th>Order Time</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        @foreach (var order in Model)
+        {
+            <tr>
+                <td>@order.Id</td>
+                <td>@order.Cocktail?.Name</td>
+                <td>@order.OrderTime.ToString("g")</td>
+                <td>@order.Status</td>
+                <td>
+                    @if (order.Status == "Pending")
+                    {
+                        <form asp-controller="CocktailOrders"
+                              asp-action="MarkReady"
+                              method="post">
+
+                            <input type="hidden"
+                                   name="id"
+                                   value="@order.Id" />
+
+                            <button type="submit"
+                                    class="btn btn-success">
+                                Mark Ready
+                            </button>
+                        </form>
+                    }
+                    else
+                    {
+                        <span>Ready for Pickup</span>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+<a asp-controller="Home"
+   asp-action="Index"
+   class="btn btn-secondary">
+    Back to Home
+</a>
